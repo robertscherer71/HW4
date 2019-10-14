@@ -1,64 +1,52 @@
-const org1_depts = [
-    {
-        name: "accounting",
-        children: [
-            { name: "accounting payable", children: [] },
-            { name: "accounting receivable", children: [] }
-        ]
-    },
-    { name: "finance", children: [] }
-];
 
-const org2_depts = [
-    {
-        name: "accounting",
-        children: [
-            { name: "accounting payable", children: [] },
-            {
-                name: "accounting receivable",
-                children: [
-                    { name: "cash", children: [] },
-                    { name: "check", children: [] }
-                ]
-            }
-        ]
-    },
-    { name: "finance", children: [{ name: "investment", children: [] }] }
-];
+//document.addEventListener("keydown", keyboardInfo); 
+//document.addEventListener("keypress", keyboardInfo); 
+let fsize =     30;
+//let fsize = parseFloat( document.getElementById('balloon').style.fontSize )
+//console.log(fsize);
+document.documentElement.style.setProperty('--balloon-font-size', fsize+'px');
+const balloon = document.getElementById('balloon')
 
+const resizeBalloon = e => {
 
-const output = document.getElementById("organization");
-let htmlStr =  PrintDepts(org1_depts, "Organization 1") + PrintDepts(org2_depts, "Organization 2");
-output.innerHTML = htmlStr;
+  if (fsize <= 60 && fsize > 0 ){
+  
+  if (e.code === 'KeyI')  {
+    console.log(`I pressed: ${e.type}, key: ${e.key}, code: ${e.code}`); 
+    
 
+    console.log(fsize);
+    fsize = fsize + 10;
+    document.documentElement.style.setProperty('--balloon-font-size', fsize+'px');
 
-function PrintDepts(depts,departmentName){
-   return  "<h2>"+departmentName+"</h2>" + '<div class= "org-structure">' + CreateList(depts, 0) +"</div>"
-
+  }
+  else if (e.code === 'KeyD') {
+    console.log(`D pressed: ${e.type}, key: ${e.key}, code: ${e.code}`);  
+    fsize = fsize - 10;
+    document.documentElement.style.setProperty('--balloon-font-size', fsize+'px');
+  }
+}
 }
 
-function CreateList(depts, level) {
-    let html = "";
-    level = level || 0;
+function CheckTransition (){
+    //alert('Transition check triggered')
+if (fsize <= 0 ) {
+    balloon.classList.remove("slowtransition") 
+    balloon.innerHTML ="Done";
+    document.removeEventListener("keyup",resizeBalloon)
+    document.documentElement.style.setProperty('--balloon-font-size', '30px');
 
-    html += "<ul>";
-
-    for (item in depts) {
-        html += '<li class = "level-' + level + '">';
-
-        if (
-            typeof depts[item].children === "object" &&
-            depts[item].children.length > 0
-        ) {
-            // An array will return 'object'
-            html += depts[item].name /*+"  LEVEL:" + level*/;
-            html += CreateList(depts[item].children, level + 1); // Child found. Calling recursively same method
-        } else {
-            html += depts[item].name /* +"   L:"+level*/;
-        }
-        html += "</li>";
-    }
-    html += "</ul>";
-
-    return html;
 }
+else if ( fsize > 60) { 
+    balloon.innerHTML ="💥";
+    document.removeEventListener("keyup",resizeBalloon)
+
+
+}}
+
+document.addEventListener("keyup", resizeBalloon);
+balloon.addEventListener("transitionend", CheckTransition)
+
+
+
+

@@ -1,3 +1,7 @@
+:root {
+--balloon-font-size: 30px; 
+
+}
 html {
   /* font-family: Arial, Helvetica, sans-serif; */
   font-size: 100%;
@@ -11,6 +15,7 @@ body {
   /* width:  900px;width:  900px; */
   align-items: center;
   justify-content: center;
+  height:100%;
 }
 /*Header*/
 header {
@@ -23,37 +28,21 @@ header > hr {
 
 .title-pagesubtitle {
   font-style: italic;
-
   font-size: 1.8em;
 }
 
-.organization {
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  align-items: stretch;
+.balloon {
+ /*font-size: 30px; */
+ font-size: var(--balloon-font-size) ;
+ text-align: center;
+ height: 100%;
+
+
+}
+.container{
+margin-top: 70px;
 }
 
-.org-structure {
-  display: flex;
-  max-width: 500px;
-  text-align: left;
-
-  border: 3px solid green;
-  margin: auto;
+.slowtransition {
+transition: font-size 2s; 
 }
-
-ul > li.level-0 {
-  list-style-type: none;
-}
-
-/*
-@media screen and (max-width: 600px) {
-  .panel-content {
-    width: 100%;
-  }
-  .main-contentpanels {
-    flex-wrap: wrap;
-  }
-}
-*/
